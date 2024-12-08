@@ -1,10 +1,10 @@
 import Button from "./Button";
 
-function Section({ contents }) {
+function Section({ item }) {
     return (
         <section>
-          <h2>{contents.title}</h2>
-          {contents.buttonsTitle.map((title) => (
+          <h2>{item.title}</h2>
+          {item.buttonsTitle.map((title) => (
             <Button key={title} title={title} />
           ))}
         </section>
