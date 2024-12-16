@@ -70,7 +70,7 @@ function Todo(){
           <Button content="Add Task"/>
       </div>
       
-      {tasks[0].map(task => (<List  task={task} />))}
+      {tasks.map(task => (<List  task={task} />))}
 
     </div>
   )

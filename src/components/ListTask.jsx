@@ -25,7 +25,7 @@
 
 import Button from "./Button"
 
-function List({task,text}){
+function List({task}){
     return(
         <>
             <div className="task">
