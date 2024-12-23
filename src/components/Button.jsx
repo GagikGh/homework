@@ -1,6 +1,8 @@
-function Button({content}) {
+function Button({ handleDelete , content, addTask}) {
+
+
     return (
-                 <button className="btn">{content}</button>        
+        <button className="btn" onClick={content === "Add Task" ? addTask : handleDelete} >{content}</button>
     )
 }
 

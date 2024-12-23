@@ -20,7 +20,7 @@ body{
 
 }
 
-.container input{
+.list{
   width: 396px;
   height: 30px;
   border-radius: 5px;
@@ -35,6 +35,8 @@ body{
 
 }
 
+
+
 .task{
   width: 400px;
   background-color:  rgba(211, 211, 211, 0.329);
@@ -44,7 +46,14 @@ body{
   display: flex;
   justify-content:space-between;
   align-items: center;
+}
 
+.name{
+  display: flex;
+}
+
+.name input {
+  width: 18px;
 }
 
 .btn{

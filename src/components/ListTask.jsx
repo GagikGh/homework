@@ -1,38 +1,18 @@
-// import Button from "./Button";
-
-// function Section({ contents }) {
-//     return (
-//         <section>
-//           <h2>{contents.title}</h2>
-//           {contents.buttonsTitle.map((title) => (
-//             <Button key={title} title={title} />
-//           ))}
-//         </section>
-//     )
-// }
-
-// export default Section;
-
-// function Li({content}){
-//   return(
-    
-//       <li>{content}</li>
-    
-//   )
-// }
-
-// export default Li
-
 import Button from "./Button"
 
-function List({task}){
+function List({task,handleDelete,isChecked,setIsChecked}){
     return(
         <>
-            <div className="task">
-                <p>{task}</p>
+            <div className="task" style={{ 
+            backgroundColor: isChecked ? 'lightgray' : 'white'}}>
+                <div className="name">
+                    <input type="checkbox" onClick={()=> {setIsChecked(!isChecked)}}/>
+                    <p>{task}</p>
+                </div>
+                
                 <div>
-                    <Button content="Edit"/>
-                    <Button content="Delete"/>
+                    <Button content="X" handleDelete={handleDelete}/>
+                    
                 </div>
                 
                 
