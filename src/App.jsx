@@ -4,9 +4,9 @@ import { useState } from "react";
 
 function Todo() {
   const [tasks, setTasks] = useState([
-    { name: "Task-1", isChecked: false, isDoubleClicked: false, isEditing: false },
-    { name: "Task-2", isChecked: false, isDoubleClicked: false, isEditing: false },
-    { name: "Task-3", isChecked: false, isDoubleClicked: false, isEditing: false }
+    { name: "Task-1", isChecked: false, isDoubleClicked: false},
+    { name: "Task-2", isChecked: false, isDoubleClicked: false},
+    { name: "Task-3", isChecked: false, isDoubleClicked: false}
   ]);
   const [newTask, setNewTask] = useState('');
 
@@ -26,8 +26,6 @@ function Todo() {
       task.name === taskName ? { ...task, isChecked: !task.isChecked } : task));
   };
 
- 
-
   return (
     <div className="container">
       <h1>TO DO List</h1>
@@ -44,7 +42,7 @@ function Todo() {
             }
           }}
         />
-        <Button content="Add Task" addTask={addTask} />
+        <Button name="Add Task" handleClick={addTask} />
       </div>
       
       {tasks.map((task, index) => (
@@ -53,9 +51,7 @@ function Todo() {
           task={task.name} 
           handleDelete={() => handleDelete(task.name)} 
           isChecked={task.isChecked} 
-          setIsChecked={() => toggleCheckbox(task.name)}
-          
-          
+          setIsChecked={() => toggleCheckbox(task.name)}         
         />
       ))}
     </div>

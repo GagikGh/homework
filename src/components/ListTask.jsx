@@ -2,7 +2,6 @@ import Button from "./Button"
 
 function List({task,handleDelete,isChecked,setIsChecked}){
     return(
-        <>
             <div className="task" style={{ 
             backgroundColor: isChecked ? 'lightgray' : 'white'}}>
                 <div className="name">
@@ -11,13 +10,12 @@ function List({task,handleDelete,isChecked,setIsChecked}){
                 </div>
                 
                 <div>
-                    <Button content="X" handleDelete={handleDelete}/>
+                    <Button name="X" handleClick={handleDelete}/>
                     
                 </div>
                 
                 
             </div>
-        </>
     )
 }
 
