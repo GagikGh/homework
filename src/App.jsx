@@ -1,63 +1,67 @@
-import Button from "./components/Button";
-import List from "./components/ListTask";
 import { useState } from "react";
+import Input from "./components/Input";
+import Button from "./components/Button";
 
-function Todo() {
-  const [tasks, setTasks] = useState([
-    { name: "Task-1", isChecked: false, isDoubleClicked: false},
-    { name: "Task-2", isChecked: false, isDoubleClicked: false},
-    { name: "Task-3", isChecked: false, isDoubleClicked: false}
-  ]);
-  const [newTask, setNewTask] = useState('');
+function App() {
+  const login = [
+    { id: "1", name: "username" },
+    { id: "2", name: "password" },
+  ];
 
-  const handleDelete = (taskName) => {
-    setTasks(tasks.filter(task => task.name !== taskName));
-  };
+  const [data, setData] = useState({
+    username: "",
+    password: "",
+  });
 
-  const addTask = () => {
-    if (newTask.trim() !== "") {
-      setTasks([...tasks, { name: newTask, isChecked: false }]);
-      setNewTask('');
+  
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;    
+    
+    setData({
+      ...data,
+      [name]: value, 
+    });
+
+    if(event.target.name === "password"){
+      event.target.type =  "password";
     }
   };
 
-  const toggleCheckbox = (taskName) => {
-    setTasks(tasks.map(task => 
-      task.name === taskName ? { ...task, isChecked: !task.isChecked } : task));
+
+  const handleClick = () => {
+    const { username, password } = data;
+
+    localStorage.setItem("username",JSON.stringify(username));
+    localStorage.setItem("password",JSON.stringify(password));
+    
+    if (username.trim() === "" || password.trim() === "") {
+      alert("Please fill all fields");
+    } else {
+      alert("Completed!");
+      
+    }
   };
+
+
 
   return (
     <div className="container">
-      <h1>TO DO List</h1>
-      <div className="enterTask">
-        <input 
-          className="list" 
-          type="text" 
-          placeholder="Enter a task" 
-          value={newTask} 
-          onChange={(e) => setNewTask(e.target.value)} 
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              addTask();
-            }
-          }}
-        />
-        <Button name="Add Task" handleClick={addTask} />
-      </div>
-      
-      {tasks.map((task, index) => (
-        <List 
-          key={index}  
-          task={task.name} 
-          handleDelete={() => handleDelete(task.name)} 
-          isChecked={task.isChecked} 
-          setIsChecked={() => toggleCheckbox(task.name)}         
+      <h2>Login</h2>
+      {login.map((field) => (
+        <Input
+          key={field.id}
+          name={field.name}
+          value={data[field.name]} 
+          onChange={handleInputChange} 
         />
       ))}
+      <Button handleClick={handleClick} />
+      <p>Not registered? <span>Create an account</span></p>
     </div>
   );
 }
 
-export default Todo;
+export default App;
+
 
 
