@@ -1,67 +1,46 @@
-import { useState } from "react";
-import Input from "./components/Input";
-import Button from "./components/Button";
+import React, { useState, useEffect } from 'react';
+import UserCard from "./components/UserCard"
+import './App.css';
 
 function App() {
-  const login = [
-    { id: "1", name: "username" },
-    { id: "2", name: "password" },
-  ];
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
 
-  const [data, setData] = useState({
-    username: "",
-    password: "",
-  });
+  // Fetch data when the component mounts
+  useEffect(() => {
+    // Start fetching users
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse the JSON data
+      })
+      .then(data => {
+        setUsers(data); // Set the users data into state
+        
+      })
+      .catch(error => {
+        setError(error.message); // Set error message if there's an issue
+      });
+  }, []); // Empty dependency array ensures this runs only once after mount
 
-  
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;    
-    
-    setData({
-      ...data,
-      [name]: value, 
-    });
+ 
 
-    if(event.target.name === "password"){
-      event.target.type =  "password";
-    }
-  };
-
-
-  const handleClick = () => {
-    const { username, password } = data;
-
-    localStorage.setItem("username",JSON.stringify(username));
-    localStorage.setItem("password",JSON.stringify(password));
-    
-    if (username.trim() === "" || password.trim() === "") {
-      alert("Please fill all fields");
-    } else {
-      alert("Completed!");
-      
-    }
-  };
-
-
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
-    <div className="container">
-      <h2>Login</h2>
-      {login.map((field) => (
-        <Input
-          key={field.id}
-          name={field.name}
-          value={data[field.name]} 
-          onChange={handleInputChange} 
-        />
-      ))}
-      <Button handleClick={handleClick} />
-      <p>Not registered? <span>Create an account</span></p>
+    <div>
+      <h1>Users List</h1>
+      {users.map((user) => {
+        return <UserCard key={user.id} user={user}/>
+      })}
     </div>
   );
 }
 
 export default App;
-
 
 
