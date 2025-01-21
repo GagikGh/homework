@@ -1,46 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import UserCard from "./components/UserCard"
-import './App.css';
+import React, { useState } from 'react';
+import Task from './components/Task';
 
-function App() {
-  const [users, setUsers] = useState([]);
-  const [error, setError] = useState(null);
+function App(){
+  const [table,setTable] = useState([
+    { id: 1, title: "Math Homework", details: ["Algebra", "Geometry"],showDetails: false },
+    { id: 2, title: "Science Project", details: ["Research", "Presentation"],showDetails: false },
+    { id: 3, title: "History Reading", details: ["Chapter 3", "Chapter 4"],showDetails: false },
+  ]);
 
-  // Fetch data when the component mounts
-  useEffect(() => {
-    // Start fetching users
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json(); // Parse the JSON data
-      })
-      .then(data => {
-        setUsers(data); // Set the users data into state
-        
-      })
-      .catch(error => {
-        setError(error.message); // Set error message if there's an issue
-      });
-  }, []); // Empty dependency array ensures this runs only once after mount
+  const handleClick = function (id) {
+    setTable(prevTable =>
+      prevTable.map(task =>
+        task.id === id ? { ...task, showDetails: !task.showDetails } : task
+      )
+    );
+  };
 
- 
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  return (
-    <div>
-      <h1>Users List</h1>
-      {users.map((user) => {
-        return <UserCard key={user.id} user={user}/>
-      })}
-    </div>
-  );
+  return(
+    <>
+      <h2>Table</h2>
+      {table.map((task) => {
+        return (<Task
+           key={task.id}
+           task={task}
+           handleClick={() => handleClick(task.id)}/>)})} 
+    </>
+  )
 }
 
-export default App;
+export default App
 
 
